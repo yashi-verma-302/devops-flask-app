@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10'
+        }
+    }
 
     stages {
         stage('Clone Code') {
@@ -16,7 +20,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'python3 -m unittest discover tests || echo "No tests yet"'
+                sh 'python -m unittest discover tests || echo "No tests yet"'
             }
         }
 
