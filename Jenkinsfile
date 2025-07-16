@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-        }
-    }
+    agent any
 
     stages {
         stage('Clone Code') {
@@ -12,15 +8,25 @@ pipeline {
             }
         }
 
+        stage('Install Python') {
+            steps {
+                sh '''
+                    which python3 || apt-get update && apt-get install -y python3 python3-pip
+                    python3 --version
+                    pip3 --version
+                '''
+            }
+        }
+
         stage('Install Requirements') {
             steps {
-                sh 'pip install -r app/requirements.txt'
+                sh 'pip3 install -r app/requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'python -m unittest discover tests || echo "No tests yet"'
+                sh 'python3 -m unittest discover tests || echo "No tests yet"'
             }
         }
 
