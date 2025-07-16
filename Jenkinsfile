@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git 'url here'
+                git 'https://github.com/yashi-verma-302/devops-flask-app.git'
             }
         }
 
